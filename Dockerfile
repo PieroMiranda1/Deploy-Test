@@ -1,8 +1,8 @@
-FROM maven:3-eclipse-temurin-23 AS build
+FROM maven:3.8.5-openjdk-17 AS build
 COPY . .
 RUN mvn clean package -DskipTests
 
-FROM eclipse-temurin:23-alpine
-COPY --from=build /target/*.jar /app.jar
+FROM openjdk:17.0.1-jdk-slim
+COPY --from=build /target/si729pc2u20181g752-0.0.1-SNAPSHOT.jar /si729pc2u20181g752.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "/si729pc2u20181g752.jar"]
